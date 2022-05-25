@@ -235,7 +235,6 @@ class Main_app(tk.Frame):
         
         self.t.wait_variable(var0)
         self.t.destroy()
-        print(self.vid)
         self.vid.redel()
         return var0.get()
 
