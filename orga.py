@@ -60,6 +60,9 @@ class MyVideoCapture:
     def __del__(self):
         if self.vid.isOpened():
             self.vid.release()
+    def redel(self):
+        if self.vid.isOpened():
+            self.vid.release()
 
 ########################### GUI ###################################
 
@@ -232,7 +235,8 @@ class Main_app(tk.Frame):
         
         self.t.wait_variable(var0)
         self.t.destroy()
-        
+        print(self.vid)
+        self.vid.redel()
         return var0.get()
 
 
@@ -250,9 +254,9 @@ class Main_app(tk.Frame):
                 width, height = im.size
             self.photo = ImageTk.PhotoImage(im)
             self.Vcanvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
-
+        
         self.t.after(self.delay, self.update)
-
+        im.close()
 
     def previewPic(self,f,outputs):
         self.t = tk.Toplevel(self)
