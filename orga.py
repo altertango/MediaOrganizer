@@ -135,12 +135,12 @@ class Main_app(tk.Frame):
         
     def Go(self,path_input, outputs):
         for f in self.walk_files(path_input):
-            print(f)
+            #print(f)
             if f.split('.')[-1].lower() in self.img_types or f.split('.')[-1].lower() in self.vid_types:
                 out=self.preview(f,outputs)
                 if out==-99: send2trash(f)
                 elif out==-1: break
-                else:
+                elif out>=0:
                     move(f,os.path.join(outputs[out],os.path.basename(f)))
         
     def walk_files(self,path):
@@ -165,10 +165,12 @@ class Main_app(tk.Frame):
         
         
     def preview(self,f,outputs):
-        if f.split('.')[-1] in self.img_types: out=self.previewPic(f,outputs)
-        elif f.split('.')[-1] in self.vid_types: out=self.previewVideo(f,outputs)
+        print(f.split('.')[-1])
+        if f.split('.')[-1].lower() in self.img_types: out=self.previewPic(f,outputs)
+        elif f.split('.')[-1].lower() in self.vid_types: out=self.previewVideo(f,outputs)
         else:
-            return
+            print("file format not supported")
+            return -2
         return out
 
     def open_file_form(self,var,tipo):
